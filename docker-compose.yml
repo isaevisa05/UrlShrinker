@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: postgres:18.4
+    container_name: postgres_18_stable
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: root
+    ports:
+      - "127.0.0.1:5499:5432"
+    volumes:
+      - pg_data_18:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  url_shrinnker_app:
+    build: .
+    container_name: url_shrinker_backend
+    ports:
+      - "80:80"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      - postgres_db
+    restart: unless-stopped
+
+volumes:
+  pg_data_18:

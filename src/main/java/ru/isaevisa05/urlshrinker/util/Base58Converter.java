@@ -21,7 +21,7 @@ public class Base58Converter {
         for (int i = 0; i < string.length(); i++) {
             char c = string.charAt(i); c = fixChar(c);
             int index = ALPHABET.indexOf(c);
-            if (index == -1) throw new IllegalArgumentException("Illegal character " + c);
+            if (index == -1) return -1;
             result = result * BASE + index;
         }
         return result;
